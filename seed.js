@@ -15,6 +15,7 @@ db.then(async ({ connection }) => {
     firstName: "Vasilii",
     lastName: "Nikonov",
     dateOfBirth: new Date(Date.UTC(2000, 3, 27)),
+    typeBootCamp: "online",
   });
   connection.close();
 });
