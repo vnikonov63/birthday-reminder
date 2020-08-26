@@ -51,16 +51,12 @@ bot.hears("tomorrow", async (ctx) => {
   console.log(today[1], today[2], newMonthTomorrow)
   if (today[1] === 'Feb' && today[3] % 4 === 0 && today[2] === '29') {
     newMonthTomorrow = true;
-    console.log('Это из-за строки 52')
   } else if (today[1] === 'Sep' || today[1] === 'Apr' || today[1] === 'Jun' || today[1] === 'Nov' && Number(today[2]) === 30) {
     newMonthTomorrow = true
-    console.log('Это из-за строки 55')
   } else if (today[2] === '31') {
     newMonthTomorrow = true
-    console.log('Это из-за строки 58')
   } else if (today[1] === 'Feb' && today[2] === '28') {
     newMonthTomorrow = true
-    console.log('Это из-за строки 61')
   }
 // Если завтра - не новый месяц...
   if (!newMonthTomorrow) {
