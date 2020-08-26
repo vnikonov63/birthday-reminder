@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/artemxknpv/elbrus-birthday/issues"
   },
-  "homepage": "https://github.com/artemxknpv/elbrus-birthday#readme"
+  "homepage": "https://github.com/artemxknpv/elbrus-birthday#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.1.1",
+    "mongoose": "^5.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
