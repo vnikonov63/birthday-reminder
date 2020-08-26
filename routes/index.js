@@ -16,12 +16,13 @@ router.get("/", (req, res) => {
 });
 
 router.post("/new", async (req, res) => {
-  const { name, lastname, birthday } = req.body;
+  const { name, lastname, birthday, city } = req.body;
   const birthdayDate = new Date(dayjs.utc(birthday).format());
   await Student.create({
     firstName: name,
     lastName: lastname,
     dateOfBirth: birthdayDate,
+    typeBootCamp: city,
   });
   res.redirect("/success");
 });
