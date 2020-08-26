@@ -14,7 +14,7 @@ db.then(async ({ connection }) => {
   await User.create({
     firstName: "Vasilii",
     lastName: "Nikonov",
-    dateOfBirth: new Date("April 27 2000"),
+    dateOfBirth: new Date(Date.UTC(2000, 3, 27)),
   });
   connection.close();
 });
