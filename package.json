@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/artemxknpv/elbrus-birthday#readme",
   "dependencies": {
+    "dayjs": "^1.8.34",
     "express": "^4.17.1",
     "hbs": "^4.1.1",
     "mongoose": "^5.10.0"
