@@ -15,7 +15,7 @@ bot.start((ctx) => {
   const job = new CronJob(
     "20 * * * * *",
     async function () {
-      ctx.reply(new Date());
+      await ctx.reply(new Date());
     },
     null,
     true,
@@ -47,8 +47,6 @@ bot.hears("tomorrow", async (ctx) => {
   let today = new Date().toDateString().split(" ")
   let newMonthTomorrow = false;
   // Проверка на конец месяца
-
-  console.log(today[1], today[2], newMonthTomorrow)
   if (today[1] === 'Feb' && today[3] % 4 === 0 && today[2] === '29') {
     newMonthTomorrow = true;
   } else if (today[1] === 'Sep' || today[1] === 'Apr' || today[1] === 'Jun' || today[1] === 'Nov' && Number(today[2]) === 30) {
@@ -66,10 +64,11 @@ bot.hears("tomorrow", async (ctx) => {
     let students = await Student.find();
     let studentsToday = students.filter((student) => {
       let studentDate = student.dateOfBirth.toDateString().split(" ");
-      [StudenttodayMonth, StudenttodayDay] = [studentDate[1], studentDate[2]];
-      console.log(StudenttodayMonth, StudenttodayDay);
-      return tomorrowMonth === StudenttodayMonth && tomorrowDay === Number(StudenttodayDay) + 1;
+      [studentBDMonth, studentBDDay] = [studentDate[1], studentDate[2]];
+      return tomorrowMonth === studentBDMonth && tomorrowDay === Number(studentBDDay);
     });
+
+
 
     if (studentsToday.length) {
       studentsToday.forEach((element) => {
