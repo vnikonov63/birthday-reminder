@@ -1,6 +1,19 @@
+<h1 class="text-align-center mb-2">ELBRUS CODING BOOTCAMP</h1>
+<hr class="mb-3">
 <form action="/new" method="POST" name="birthdayForm">
-  <label>Твоё имя: <br><input type="text" name="name" id="name" class="mb-3"></label><br>
-  <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" class="mb-3"></label><br>
-  <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" class="mb-3"></label>
-  <br><button type="submit" class="btn btn-primary">Подтвердить</button>
+  <div class="form-group">
+    <label> Твоё имя: <br><input type="text" name="name" id="name" required placeholder="Иван"
+        class="mb-3 form-control"></label><br>
+    <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" placeholder="Иванов" required
+        class="mb-3 form-control"></label><br>
+    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" required
+        class="mb-3 form-control"></label><br>
+    <label>Где проходишь буткемп: <br>
+      <select name="city" class="mb-3 form-control" id="city">
+        <option value="moscow">Москва</option>
+        <option value="spb">Санкт-Петербург</option>
+        <option value="online">Онлайн</option>
+      </select></label>
+    <br><button type="submit" class="btn btn-primary">Подтвердить</button>
+  </div>
 </form>
