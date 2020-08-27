@@ -1,0 +1,21 @@
+<h1 class="text-align-center mb-2">ELBRUS CODING BOOTCAMP</h1>
+<hr class="mb-3">
+<form action="/admin/edit/{{student.id}}" method="POST" name="birthdayForm">
+  <div class="form-group">
+    <input type="hidden" name="_method" value="patch">
+    <label> Имя: <br><input type="text" name="firstName" id="firstName" required class="mb-3 form-control"
+        value="{{student.firstName}}"></label><br>
+    <label>Фамилия: <br><input type="text" name="lastName" id="lastName" required class="mb-3 form-control"
+        value="{{student.lastName}}"></label><br>
+    <label>Дата рождения: <br><input type="date" name="birthday" id="birthday" required class="mb-3 form-control"
+        value="{{student.prettyDate}}"></label><br>
+    <label>Локация: <br>
+      <select name="city" class="mb-3 form-control" id="city">
+        <option value="moscow">Москва</option>
+        <option value="spb">Санкт-Петербург</option>
+        <option value="online">Онлайн</option>
+      </select></label>
+    <br><button type="submit" class="btn btn-primary">Подтвердить</button><a href="/admin"><button type="button"
+        class="ml-3 btn btn-secondary">Отмена</button></a>
+  </div>
+</form>
