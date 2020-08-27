@@ -1,7 +1,14 @@
 * {
-  font-family: 'Input Mono', monospace;
+  font-family: 'Consolas', sans-serif;
 }
 
 .btn-primary {
   background-color: royalblue;
+}
+
+body {
+  background-image: url('../img/photo_2020-08-27_16-20-27.jpg');
+  background-repeat: no-repeat;
+  background-position-x: 700px;
+  background-position-y: 50px;
 }

@@ -6,8 +6,6 @@ const dayjs = require('dayjs');
 const Admin = require('../models/admin');
 
 function checkAuth(req, res, next) {
-  console.log('I AM HERE');
-  console.log(req.session);
   if (req.session.user) next();
   else res.redirect('/admin/login');
 }
@@ -19,7 +17,6 @@ router.get('/login', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { login, password } = req.body;
   const user = await auth(login, password);
-  console.log(user);
   if (user) {
     req.session.user = user;
     console.log(req.session.user);
