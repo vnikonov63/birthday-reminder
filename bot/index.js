@@ -8,28 +8,28 @@ function bot() {
   const { CronJob } = require("cron");
   const { setMaxListeners } = require("../app");
 
+  let todayYear = new Date().toDateString().split(" ")[3];
   let globalCtx;
   let jobMorning = new CronJob(
     "35 * * * * *",
     async function () {
-      let todayDate = new Date().toDateString().split(" ");
-      console.log(todayDate);
       today().then((data) => {
         if (data.length) {
           data.forEach((element) => {
+            let userAge = todayYear - element.prettyDate.split("-")[0];
             if (!globalCtx) {
               return;
             }
             globalCtx.reply(
               `У студента ${element.firstName} ${
                 element.lastName
-              } сегодня день рождения. Локация: ${
+              } сегодня день рождения.\nЛокация: ${
                 element.typeBootCamp === "moscow"
                   ? "Москва"
                   : element.typeBootCamp === "spb"
                   ? "Санкт-Петербург"
                   : "Онлайн"
-              }.`
+              }.\nЕму исполнилось ${userAge}`
             );
           });
         } else {
@@ -48,6 +48,10 @@ function bot() {
       tomorrow().then((data) => {
         if (data.length) {
           data.forEach((element) => {
+            let userAge = todayYear - element.prettyDate.split("-")[0];
+            if (!globalCtx) {
+              return;
+            }
             globalCtx.reply(
               `У студента ${element.firstName} ${
                 element.lastName
@@ -57,11 +61,11 @@ function bot() {
                   : element.typeBootCamp === "spb"
                   ? "Санкт-Петербург"
                   : "Онлайн"
-              }.`
+              }.\nЕму исполнится ${userAge}`
             );
           });
         } else {
-          globalCtx.reply("Сегодня ни у кого нет дня рождения");
+          globalCtx.reply("Завтра ни у кого нет дня рождения");
         }
       });
     },
@@ -107,10 +111,10 @@ function bot() {
     await ctx.reply(
       "Нажми /help для того, чтобы узнать про возможности нашего бота. Не забудь выбрать вариант уведомлений из предыдущего сообщения",
       Telegraf.Markup.keyboard([
-        ["Сегодня", "Завтра"],
-        ["Остановить уведомления", "Включить уведомления"],
-        ["Проверить включены ли уведомления"],
-        ["Ссылка на отправление формы ученикам"],
+        ["Сегодня 👇", "Завтра ⌛"],
+        ["Остановить уведомления 🍎", "Включить уведомления 🍏"],
+        ["Проверить включены ли уведомления 🥛"],
+        ["Ссылка на отправление формы ученикам 🎱"],
       ])
         .oneTime()
         .resize()
@@ -202,6 +206,7 @@ function bot() {
     });
     if (studentsToday.length) {
       studentsToday.forEach((element) => {
+        let userAge = todayYear - element.prettyDate.split("-")[0];
         ctx.reply(
           `У студента ${element.firstName} ${
             element.lastName
@@ -211,7 +216,7 @@ function bot() {
               : element.typeBootCamp === "spb"
               ? "Санкт-Петербург"
               : "Онлайн"
-          }.`
+          }.\nЕму исполнилось ${userAge}`
         );
       });
     } else {
@@ -240,6 +245,7 @@ function bot() {
     });
     if (studentsTomorrow.length) {
       studentsTomorrow.forEach((element) => {
+        let userAge = todayYear - element.prettyDate.split("-")[0];
         ctx.reply(
           `У студента ${element.firstName} ${
             element.lastName
@@ -249,7 +255,7 @@ function bot() {
               : element.typeBootCamp === "spb"
               ? "Санкт-Петербург"
               : "Онлайн"
-          }.`
+          }.\nЕму исполнится ${userAge}`
         );
       });
     } else {
