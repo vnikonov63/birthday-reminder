@@ -29,11 +29,16 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  console.log()
-  req.session.submit = " " ;
-  next();
-});
+// app.use((req, res, next) => {
+// <<<<<<< authorization
+//   console.log()
+//   req.session.submit = " " ;
+// =======
+//   console.log("SESSION:", req.session);
+//   // req.session.submit = " ";
+// >>>>>>> master
+//   next();
+// });
 
 app.use(
   methodOverride(function (req, res) {
