@@ -5,9 +5,124 @@ const bot = new Telegraf("986785690:AAH5awaR1tJANp-oGS4t_2vNJPJztioCkdI");
 
 const { CronJob } = require("cron");
 
+let globalCtx;
+let jobMorning = new CronJob(
+  "35 * * * * *",
+  async function () {
+    today().then((data) => {
+      if (data.length) {
+        data.forEach((element) => {
+          if (!globalCtx) {
+            return;
+          }
+          globalCtx.reply(
+            `У студента ${element.firstName} ${
+              element.lastName
+            } сегодня день рождения. Локация: ${
+              element.typeBootCamp === "moscow"
+                ? "Москва"
+                : element.typeBootCamp === "spb"
+                ? "Санкт-Петербург"
+                : "Онлайн"
+            }.`
+          );
+        });
+      } else {
+        globalCtx.reply("Сегодня ни у кого нет дня рождения");
+      }
+    });
+  },
+  null,
+  true,
+  "Europe/Moscow"
+);
+
+let jobEvening = new CronJob(
+  "35 * * * * *",
+  async function () {
+    tomorrow().then((data) => {
+      if (data.length) {
+        data.forEach((element) => {
+          globalCtx.reply(
+            `У студента ${element.firstName} ${
+              element.lastName
+            } завтра день рождения. Локация: ${
+              element.typeBootCamp === "moscow"
+                ? "Москва"
+                : element.typeBootCamp === "spb"
+                ? "Санкт-Петербург"
+                : "Онлайн"
+            }.`
+          );
+        });
+      } else {
+        globalCtx.reply("Сегодня ни у кого нет дня рождения");
+      }
+    });
+  },
+  null,
+  true,
+  "Europe/Moscow"
+);
+
 mongoose.connect("mongodb://localhost:27017/elbrusBirthday", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+});
+
+const inlineKeyboardNotifications = Telegraf.Markup.inlineKeyboard([
+  Telegraf.Markup.callbackButton("Да 💃", "notify"),
+  Telegraf.Markup.callbackButton("Нет 🙅‍♂️", "nonotify"),
+]).extra();
+
+bot.action("notify", async (ctx) => {
+  globalCtx = ctx;
+  await ctx.reply("Хорошо\n");
+  await ctx.reply(
+    "Теперь каждый день в 9 часов утра тебе будет приходить уведомление о днях рождениях сегодня"
+  );
+  await ctx.reply(
+    "Так же каждый день в 9 часов вечера тебе будет приходить уведомление о днях рождениях завтра"
+  );
+  jobMorning.start();
+  jobEvening.start();
+});
+
+bot.action("nonotify", (ctx) => {
+  globalCtx = ctx;
+  ctx.reply("Хорошо, мы не будем присылать тебе уведомления");
+});
+
+bot.start(async (ctx) => {
+  await ctx.telegram.sendMessage(
+    ctx.from.id,
+    "Привет, Маша! Ты хочешь получать уведомления?",
+    inlineKeyboardNotifications
+  );
+  await ctx.reply(
+    "Нажми /help для того, чтобы узнать про возможности нашего бота. Не забудь выбрать вариант уведомлений из предыдущего сообщения",
+    Telegraf.Markup.keyboard([
+      ["Сегодня", "Завтра"],
+      ["Остановить уведомления", "Включить уведомления"],
+    ])
+      .oneTime()
+      .resize()
+      .extra()
+  );
+});
+
+bot.hears("Остановить уведомления", (ctx) => {
+  if ((jobMorning.running === true) & (jobEvening.running === true)) {
+    jobMorning.stop();
+    jobEvening.stop();
+  }
+});
+
+bot.hears("Включить уведомления", (ctx) => {
+  if ((jobMorning.running === false) & (jobEvening.running === false)) {
+    jobMorning.start();
+    jobEvening.start();
+  }
 });
 
 async function today() {
@@ -55,75 +170,7 @@ bot.help((ctx) =>
   )
 );
 
-startFlag = 0;
-
-if (startFlag === 0) {
-  bot.start((ctx) => {
-    startFlag += 1;
-    // Утренее оповещение о днях рождениях, которые будут сегодня
-    // время надо подкрутить
-    const jobMorning = new CronJob(
-      "0 * * * * *",
-      async function () {
-        today().then((data) => {
-          if (data.length) {
-            data.forEach((element) => {
-              ctx.reply(
-                `У студента ${element.firstName} ${
-                  element.lastName
-                } сегодня день рождения. Локация: ${
-                  element.typeBootCamp === "moscow"
-                    ? "Москва"
-                    : element.typeBootCamp === "spb"
-                    ? "Санкт-Петербург"
-                    : "Онлайн"
-                }.`
-              );
-            });
-          } else {
-            ctx.reply("Сегодня ни у кого нет дня рождения");
-          }
-        });
-      },
-      null,
-      true,
-      "Europe/Moscow"
-    );
-
-    const jobEvening = new CronJob(
-      "5 * * * * *",
-      async function () {
-        tomorrow().then((data) => {
-          if (data.length) {
-            data.forEach((element) => {
-              ctx.reply(
-                `У студента ${element.firstName} ${
-                  element.lastName
-                } завтра день рождения. Локация: ${
-                  element.typeBootCamp === "moscow"
-                    ? "Москва"
-                    : element.typeBootCamp === "spb"
-                    ? "Санкт-Петербург"
-                    : "Онлайн"
-                }.`
-              );
-            });
-          } else {
-            ctx.reply("Сегодня ни у кого нет дня рождения");
-          }
-        });
-      },
-      null,
-      true,
-      "Europe/Moscow"
-    );
-
-    jobMorning.start();
-    jobEvening.start();
-  });
-}
-
-bot.hears("today", async (ctx) => {
+bot.hears("Сегодня", async (ctx) => {
   let today = new Date().toDateString().split(" ");
   [todayMonth, todayDay] = [today[1], today[2]];
   let students = await Student.find();
@@ -151,7 +198,7 @@ bot.hears("today", async (ctx) => {
   }
 });
 
-bot.hears("tomorrow", async (ctx) => {
+bot.hears("Завтра", async (ctx) => {
   let tomorrow = new Date(Date.now() + 1000 * 60 * 60 * 24 + 1000 * 60 * 60 * 3)
     .toDateString()
     .split(" ");
@@ -187,48 +234,6 @@ bot.hears("tomorrow", async (ctx) => {
   }
 });
 
-bot.on("sticker", (ctx) => ctx.reply("👍"));
+bot.on("sticker", (ctx) => ctx.reply("Очень классный стикер"));
 
 bot.launch();
-
-// Code for the command tomorrow
-// ctx.reply(new Date().getDate());
-
-//   let today = new Date().toDateString().split(" ")
-//   let newMonthTomorrow = false;
-//   // Проверка на конец месяца
-//   if (today[1] === 'Feb' && today[3] % 4 === 0 && today[2] === '29') {
-//     newMonthTomorrow = true;
-//   } else if (today[1] === 'Sep' || today[1] === 'Apr' || today[1] === 'Jun' || today[1] === 'Nov' && Number(today[2]) === 30) {
-//     newMonthTomorrow = true
-//   } else if (today[2] === '31') {
-//     newMonthTomorrow = true
-//   } else if (today[1] === 'Feb' && today[2] === '28') {
-//     newMonthTomorrow = true
-//   }
-// // Если завтра - не новый месяц...
-//   if (!newMonthTomorrow) {
-//     // Кладем в tomorrow текущий месяц и завтрашний день
-//     let tomorrow = [today[1], Number(today[2]) + 1];
-//     let [tomorrowMonth, tomorrowDay] = [tomorrow[0], tomorrow[1]]
-//     let students = await Student.find();
-//     let studentsToday = students.filter((student) => {
-//       let studentDate = student.dateOfBirth.toDateString().split(" ");
-//       [studentBDMonth, studentBDDay] = [studentDate[1], studentDate[2]];
-//       return tomorrowMonth === studentBDMonth && tomorrowDay === Number(studentBDDay);
-//     });
-//     if (studentsToday.length) {
-//       studentsToday.forEach((element) => {
-//         ctx.reply(
-//           `У студента ${element.firstName} ${element.lastName} завтра день рождения. Локация: ${element.typeBootCamp === 'moscow' ? 'Москва' : element.typeBootCamp === 'spb' ? 'Санкт-Петербург' : 'Онлайн'}.`
-//         );
-//       })} else {
-//       await ctx.reply('Завтра ни у кого нет дня рождения')
-//     }
-//   } else {
-//     // Нужно изменение месяца
-//     // *************************************
-//     console.log("ЭТО НАДО БУДЕТ ДОПИСАТЬ")
-//     await ctx.reply('Сори, пока не работает')
-//     // *************************************
-//   }
