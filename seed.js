@@ -12,9 +12,37 @@ const Student = require("./models/students");
 db.then(async ({ connection }) => {
   await connection.db.dropDatabase();
   await Student.create({
-    firstName: "Artem",
-    lastName: "Nikonov",
+    firstName: "Artem1",
+    lastName: "Nikonov1",
     dateOfBirth: new Date(Date.UTC(2000, 3, 27)),
+    typeBootCamp: "online",
+  });
+
+  await Student.create({
+    firstName: "Artem2",
+    lastName: "Nikonov2",
+    dateOfBirth: new Date(Date.UTC(2000, 7, 27)),
+    typeBootCamp: "online",
+  });
+
+  await Student.create({
+    firstName: "Artem3",
+    lastName: "Nikonov3",
+    dateOfBirth: new Date(Date.UTC(2000, 7, 28)),
+    typeBootCamp: "online",
+  });
+
+  await Student.create({
+    firstName: "Artem4",
+    lastName: "Nikonov4",
+    dateOfBirth: new Date(Date.UTC(2000, 7, 26)),
+    typeBootCamp: "online",
+  });
+
+  await Student.create({
+    firstName: "Artem5",
+    lastName: "Nikonov5",
+    dateOfBirth: new Date(Date.UTC(2000, 3, 29)),
     typeBootCamp: "online",
   });
   connection.close();
