@@ -3,6 +3,7 @@ function bot() {
   const Student = require("../models/students");
   const mongoose = require("mongoose");
   const bot = new Telegraf(process.env.BOT_TOKEN);
+  require("dotenv").config();
 
   const { CronJob } = require("cron");
   const { setMaxListeners } = require("../app");
@@ -67,10 +68,13 @@ function bot() {
     "Europe/Moscow"
   );
 
-  mongoose.connect(process.env.MONGO_DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  mongoose.connect(
+    "mongodb+srv://vnikonov:12345@cluster0.opbgv.mongodb.net/elbrusBirthday?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
 
   const inlineKeyboardNotifications = Telegraf.Markup.inlineKeyboard([
     Telegraf.Markup.callbackButton("Да 💃", "notify"),
