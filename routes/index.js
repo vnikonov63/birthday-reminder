@@ -15,6 +15,7 @@ router.get("/", (req, res) => {
   res.render("index");
 });
 
+
 router.post("/new", async (req, res) => {
   if (typeof req.session.submit === "undefined") {
     const { name, lastname, birthday, city } = req.body;
