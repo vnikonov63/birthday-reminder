@@ -25,21 +25,8 @@ router.post('/new', async (req, res) => {
       lastName: lastname,
       dateOfBirth: birthdayDate,
       typeBootCamp: city,
+      prettyDate: birthday,
     });
-    const date = await student.dateOfBirth
-      .toLocaleDateString('en-US')
-      .split('/');
-    let prettydate = await date
-      .map((elem) => {
-        if (elem.length === 1) {
-          return `0${elem}`;
-        }
-        return elem;
-      })
-      .reverse()
-      .join('-');
-    student.prettyDate = prettydate;
-    await student.save();
     res.redirect('/success');
   } else {
     const fail = true;
