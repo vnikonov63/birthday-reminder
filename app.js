@@ -9,13 +9,10 @@ const bot = require("./bot/index");
 const Admin = require("./models/admin");
 require("dotenv").config();
 
-db = mongoose.connect(
-  "mongodb+srv://vnikonov:12345@cluster0.opbgv.mongodb.net/elbrusBirthday?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+db = mongoose.connect(process.env.MONGO_DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 db.then(async ({ connection }) => {
   // await connection.db.dropDatabase();

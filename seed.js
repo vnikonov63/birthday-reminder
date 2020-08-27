@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
 const Admin = require("./models/admin");
 
-let db = mongoose.connect(
-  "mongodb+srv://vnikonov:12345@cluster0.opbgv.mongodb.net/elbrusBirthday?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+let db = mongoose.connect(process.env.MONGO_DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Just for the sake of checking whether the database is structured properly
 const { connection } = require("mongoose");
