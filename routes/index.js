@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.post('/new', async (req, res) => {
+router.post('/', async (req, res) => {
   if (typeof req.session.submit === 'undefined') {
     const { name, lastname, birthday, city } = req.body;
     req.session.submit = 'submit';
@@ -25,21 +25,8 @@ router.post('/new', async (req, res) => {
       lastName: lastname,
       dateOfBirth: birthdayDate,
       typeBootCamp: city,
-    });
-    const date = await student.dateOfBirth
-      .toLocaleDateString('en-US')
-      .split('/');
-    let prettydate = await date
-      .map((elem) => {
-        if (elem.length === 1) {
-          return `0${elem}`;
-        }
-        return elem;
-      })
-      .reverse()
-      .join('-');
-    student.prettyDate = prettydate;
-    await student.save();
+      prettyDate: birthday,
+    }).save();
     res.redirect('/success');
   } else {
     const fail = true;

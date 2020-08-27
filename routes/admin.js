@@ -19,7 +19,6 @@ router.post('/login', async (req, res) => {
   const user = await auth(login, password);
   if (user) {
     req.session.user = user;
-    console.log(req.session.user);
     return res.redirect('/admin');
   }
   const fail = true;
@@ -54,7 +53,7 @@ router.patch('/edit/:id', checkAuth, async (req, res) => {
     lastName,
     dateOfBirth,
     typeBootCamp: city,
-    prettyDate: dateOfBirth.toLocaleDateString('en-US'),
+    prettyDate: birthday,
   });
   // res.json({ success: true, student });
   res.redirect('/admin');
