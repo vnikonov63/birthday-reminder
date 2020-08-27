@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/new", async (req, res) => {
-  if (req.session.submit === " ") {
+  if (typeof req.session.submit === "undefined") {
     const { name, lastname, birthday, city } = req.body;
     req.session.submit = "submit";
     const birthdayDate = new Date(dayjs.utc(birthday).format());
