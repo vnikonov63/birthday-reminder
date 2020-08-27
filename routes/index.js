@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.post('/new', async (req, res) => {
+router.post('/', async (req, res) => {
   if (typeof req.session.submit === 'undefined') {
     const { name, lastname, birthday, city } = req.body;
     req.session.submit = 'submit';
@@ -26,7 +26,7 @@ router.post('/new', async (req, res) => {
       dateOfBirth: birthdayDate,
       typeBootCamp: city,
       prettyDate: birthday,
-    });
+    }).save();
     res.redirect('/success');
   } else {
     const fail = true;

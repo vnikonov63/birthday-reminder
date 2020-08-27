@@ -19,7 +19,6 @@ router.post('/login', async (req, res) => {
   const user = await auth(login, password);
   if (user) {
     req.session.user = user;
-    console.log(req.session.user);
     return res.redirect('/admin');
   }
   const fail = true;
@@ -47,10 +46,8 @@ router.get('/edit/:id', checkAuth, async (req, res) => {
 
 router.patch('/edit/:id', checkAuth, async (req, res) => {
   const id = req.params.id;
-  console.log('STROK 50 V ADMINE', req.body);
   const { firstName, lastName, birthday, city } = req.body;
   const dateOfBirth = new Date(dayjs.utc(birthday).format());
-  console.log('POSLE 53 STR DOB', dateOfBirth);
   let student = await Student.findByIdAndUpdate(id, {
     firstName,
     lastName,
