@@ -1,25 +1,24 @@
-const express = require("express");
-const mongoose = require("mongoose");
+const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 
 // adding the necessary elements to work with the dates
-const dayjs = require("dayjs");
-let utc = require("dayjs/plugin/utc");
+const dayjs = require('dayjs');
+let utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
 
-const Student = require("../models/students");
+const Student = require('../models/students');
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.render("index");
+router.get('/', (req, res) => {
+  res.render('index');
 });
 
-
-router.post("/new", async (req, res) => {
-  if (typeof req.session.submit === "undefined") {
+router.post('/new', async (req, res) => {
+  if (typeof req.session.submit === 'undefined') {
     const { name, lastname, birthday, city } = req.body;
-    req.session.submit = "submit";
+    req.session.submit = 'submit';
     const birthdayDate = new Date(dayjs.utc(birthday).format());
     let student = await new Student({
       firstName: name,
@@ -28,8 +27,8 @@ router.post("/new", async (req, res) => {
       typeBootCamp: city,
     });
     const date = await student.dateOfBirth
-      .toLocaleDateString("en-US")
-      .split("/");
+      .toLocaleDateString('en-US')
+      .split('/');
     let prettydate = await date
       .map((elem) => {
         if (elem.length === 1) {
@@ -38,17 +37,18 @@ router.post("/new", async (req, res) => {
         return elem;
       })
       .reverse()
-      .join("-");
+      .join('-');
     student.prettyDate = prettydate;
     await student.save();
-    res.redirect("/success");
+    res.redirect('/success');
   } else {
-    res.redirect("/");
+    const fail = true;
+    res.render('index', { fail });
   }
 });
 
-router.get("/success", (req, res) => {
-  res.render("success");
+router.get('/success', (req, res) => {
+  res.render('success');
 });
 
 module.exports = router;
