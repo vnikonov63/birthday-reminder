@@ -54,67 +54,74 @@ bot.help((ctx) =>
       " чтобы тебе приходили уведомления два раза в день"
   )
 );
-bot.start((ctx) => {
-  // Утренее оповещение о днях рождениях, которые будут сегодня
-  // время надо подкрутить
-  const jobMorning = new CronJob(
-    "0 * * * * *",
-    async function () {
-      today().then((data) => {
-        if (data.length) {
-          data.forEach((element) => {
-            ctx.reply(
-              `У студента ${element.firstName} ${
-                element.lastName
-              } сегодня день рождения. Локация: ${
-                element.typeBootCamp === "moscow"
-                  ? "Москва"
-                  : element.typeBootCamp === "spb"
-                  ? "Санкт-Петербург"
-                  : "Онлайн"
-              }.`
-            );
-          });
-        } else {
-          ctx.reply("Сегодня ни у кого нет дня рождения");
-        }
-      });
-    },
-    null,
-    true,
-    "Europe/Moscow"
-  );
-  jobMorning.start();
 
-  const jobEvening = new CronJob(
-    "5 * * * * *",
-    async function () {
-      tomorrow().then((data) => {
-        if (data.length) {
-          data.forEach((element) => {
-            ctx.reply(
-              `У студента ${element.firstName} ${
-                element.lastName
-              } завтра день рождения. Локация: ${
-                element.typeBootCamp === "moscow"
-                  ? "Москва"
-                  : element.typeBootCamp === "spb"
-                  ? "Санкт-Петербург"
-                  : "Онлайн"
-              }.`
-            );
-          });
-        } else {
-          ctx.reply("Сегодня ни у кого нет дня рождения");
-        }
-      });
-    },
-    null,
-    true,
-    "Europe/Moscow"
-  );
-  jobEvening.start();
-});
+startFlag = 0;
+
+if (startFlag === 0) {
+  bot.start((ctx) => {
+    startFlag += 1;
+    // Утренее оповещение о днях рождениях, которые будут сегодня
+    // время надо подкрутить
+    const jobMorning = new CronJob(
+      "0 * * * * *",
+      async function () {
+        today().then((data) => {
+          if (data.length) {
+            data.forEach((element) => {
+              ctx.reply(
+                `У студента ${element.firstName} ${
+                  element.lastName
+                } сегодня день рождения. Локация: ${
+                  element.typeBootCamp === "moscow"
+                    ? "Москва"
+                    : element.typeBootCamp === "spb"
+                    ? "Санкт-Петербург"
+                    : "Онлайн"
+                }.`
+              );
+            });
+          } else {
+            ctx.reply("Сегодня ни у кого нет дня рождения");
+          }
+        });
+      },
+      null,
+      true,
+      "Europe/Moscow"
+    );
+
+    const jobEvening = new CronJob(
+      "5 * * * * *",
+      async function () {
+        tomorrow().then((data) => {
+          if (data.length) {
+            data.forEach((element) => {
+              ctx.reply(
+                `У студента ${element.firstName} ${
+                  element.lastName
+                } завтра день рождения. Локация: ${
+                  element.typeBootCamp === "moscow"
+                    ? "Москва"
+                    : element.typeBootCamp === "spb"
+                    ? "Санкт-Петербург"
+                    : "Онлайн"
+                }.`
+              );
+            });
+          } else {
+            ctx.reply("Сегодня ни у кого нет дня рождения");
+          }
+        });
+      },
+      null,
+      true,
+      "Europe/Moscow"
+    );
+
+    jobMorning.start();
+    jobEvening.start();
+  });
+}
 
 bot.hears("today", async (ctx) => {
   let today = new Date().toDateString().split(" ");
