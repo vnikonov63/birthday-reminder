@@ -31,7 +31,7 @@ app.use(
 
 app.use((req, res, next) => {
   console.log("SESSION:", req.session);
-  req.session.submit = " ";
+  // req.session.submit = " ";
   next();
 });
 
