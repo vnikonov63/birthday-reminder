@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bot = new Telegraf("986785690:AAH5awaR1tJANp-oGS4t_2vNJPJztioCkdI");
 
 const { CronJob } = require("cron");
+const { setMaxListeners } = require("../app");
 
 let globalCtx;
 let jobMorning = new CronJob(
@@ -38,7 +39,7 @@ let jobMorning = new CronJob(
 );
 
 let jobEvening = new CronJob(
-  "35 * * * * *",
+  "50 * * * * *",
   async function () {
     tomorrow().then((data) => {
       if (data.length) {
@@ -104,11 +105,25 @@ bot.start(async (ctx) => {
     Telegraf.Markup.keyboard([
       ["Сегодня", "Завтра"],
       ["Остановить уведомления", "Включить уведомления"],
+      ["Проверить включены ли уведомления"],
+      ["Ссылка на отправление формы ученикам"],
     ])
       .oneTime()
       .resize()
       .extra()
   );
+});
+
+bot.hears("Проверить включены ли уведомления", (ctx) => {
+  if (jobMorning.running === true) {
+    ctx.reply("Уведомления включены");
+  } else {
+    ctx.reply("Уведомления выключены");
+  }
+});
+
+bot.hears("Отправить ссылку на информацию студенту", (ctx) => {
+  ctx.reply("Button is working");
 });
 
 bot.hears("Остановить уведомления", (ctx) => {
