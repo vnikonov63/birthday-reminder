@@ -12,6 +12,8 @@ function bot() {
   let jobMorning = new CronJob(
     "35 * * * * *",
     async function () {
+      let todayDate = new Date().toDateString().split(" ");
+      console.log(todayDate);
       today().then((data) => {
         if (data.length) {
           data.forEach((element) => {
@@ -21,13 +23,13 @@ function bot() {
             globalCtx.reply(
               `У студента ${element.firstName} ${
                 element.lastName
-              } сегодня день рождения. Локация: ${
+              } сегодня день рождения. Ему исполнилось 154 года. Локация: ${
                 element.typeBootCamp === "moscow"
                   ? "Москва"
                   : element.typeBootCamp === "spb"
                   ? "Санкт-Петербург"
                   : "Онлайн"
-              }.`
+              }`
             );
           });
         } else {
@@ -206,7 +208,7 @@ function bot() {
         ctx.reply(
           `У студента ${element.firstName} ${
             element.lastName
-          } сегодня день рождения. Локация: ${
+          } сегодня день рождения. Ему исполнилось 154 года. Локация: ${
             element.typeBootCamp === "moscow"
               ? "Москва"
               : element.typeBootCamp === "spb"
@@ -244,7 +246,7 @@ function bot() {
         ctx.reply(
           `У студента ${element.firstName} ${
             element.lastName
-          } Завтра день рождения \n Локация: ${
+          } Завтра день рождения \n Ему исполнилось 154 года. Локация: ${
             element.typeBootCamp === "moscow"
               ? "Москва"
               : element.typeBootCamp === "spb"
