@@ -122,7 +122,7 @@ function bot() {
     );
   });
 
-  bot.hears("Проверить включены ли уведомления", (ctx) => {
+  bot.hears("Проверить включены ли уведомления 🥛", (ctx) => {
     if (jobMorning.running === true) {
       ctx.reply("Уведомления включены");
     } else {
@@ -130,18 +130,18 @@ function bot() {
     }
   });
 
-  bot.hears("Отправить ссылку на информацию студенту", (ctx) => {
+  bot.hears("Ссылка на отправление формы ученикам 🎱", (ctx) => {
     ctx.reply("Button is working");
   });
 
-  bot.hears("Остановить уведомления", (ctx) => {
+  bot.hears("Остановить уведомления 🍎", (ctx) => {
     if ((jobMorning.running === true) & (jobEvening.running === true)) {
       jobMorning.stop();
       jobEvening.stop();
     }
   });
 
-  bot.hears("Включить уведомления", (ctx) => {
+  bot.hears("Включить уведомления 🍏", (ctx) => {
     if ((jobMorning.running === false) & (jobEvening.running === false)) {
       jobMorning.start();
       jobEvening.start();
@@ -195,7 +195,7 @@ function bot() {
     )
   );
 
-  bot.hears("Сегодня", async (ctx) => {
+  bot.hears("Сегодня 👇", async (ctx) => {
     let today = new Date().toDateString().split(" ");
     [todayMonth, todayDay] = [today[1], today[2]];
     let students = await Student.find();
@@ -224,7 +224,7 @@ function bot() {
     }
   });
 
-  bot.hears("Завтра", async (ctx) => {
+  bot.hears("Завтра ⌛", async (ctx) => {
     let tomorrow = new Date(
       Date.now() + 1000 * 60 * 60 * 24 + 1000 * 60 * 60 * 3
     )
