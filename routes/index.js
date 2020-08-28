@@ -8,6 +8,7 @@ let utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
 const Student = require("../models/students");
+const Ip = require("../models/ip");
 
 const router = express.Router();
 
