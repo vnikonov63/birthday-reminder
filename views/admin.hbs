@@ -3,15 +3,16 @@
 <h1 class="mb-2">Список студентов</h1>
 <hr class="mb-4">
 
-<form method="POST" action="/admin/sort" id="sort" name="sort">
-  <label for="select">По</label>
-  <select name="select" id="select">
-    <option id="upcoming" value="upcoming">ближайшему дню рождения</option>
-    <option id="lastName" value="name">фамилии</option>
-    <option id="default" value="default">умолчанию</option>
-    <option id="firstName" value="firstName">имени</option>
-  </select>
-  <input type="submit" value="Отсортировать">
+<form method="POST" class="form-inline mb-4" action="/admin/sort" id="sort" name="sort">
+  <div class="form-group">
+    <select name="select" class="form-control mr-3" style="width: 30rem" id="select">
+      <option id="upcoming" value="upcoming">По ближайшему дню рождения</option>
+      <option id="lastName" value="name">По фамилии</option>
+      <option id="default" value="default">По умолчанию</option>
+      <option id="firstName" value="firstName">По имени</option>
+    </select>
+    <input type="submit" class="btn btn-info" value="Отсортировать">
+  </div>
 </form>
 
 
