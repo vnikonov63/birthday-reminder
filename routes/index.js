@@ -8,7 +8,6 @@ let utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 const Student = require("../models/students");
 const Ip = require("../models/ip");
-const evercookie = require("evercookie");
 
 const router = express.Router();
 
@@ -24,11 +23,7 @@ router.post("/", async (req, res) => {
   const ip = await new Ip({
     ip: userIp,
   }).save();
-  if (
-    (typeof req.session.submit === "undefined") &
-    (typeof evercookie.store3 === "undefined")
-  ) {
-    evercookie.store3 = "aaaa";
+  if (typeof req.session.submit === "undefined") {
     const { name, lastname, birthday, city, animal } = req.body;
     if (isOldEnough(birthday)) {
       req.session.submit = "submit";
