@@ -6,20 +6,11 @@ const adminRouter = require('./routes/admin');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const bot = require('./bot/index');
-const Admin = require('./models/admin');
 require('dotenv').config();
 
 db = mongoose.connect(process.env.MONGO_DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
-
-db.then(async ({ connection }) => {
-  // await connection.db.dropDatabase();
-  const admin = new Admin({
-    login: 'admin',
-    password: 'admin',
-  }).save();
 });
 
 app.set('view engine', 'hbs');
@@ -39,17 +30,6 @@ app.use(
     },
   })
 );
-
-// app.use((req, res, next) => {
-// <<<<<<< authorization
-//   console.log()
-//   req.session.submit = " " ;
-// =======
-//   console.log("SESSION:", req.session);
-//   // req.session.submit = " ";
-// >>>>>>> master
-//   next();
-// });
 
 app.use(
   methodOverride(function (req, res) {
