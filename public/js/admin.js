@@ -26,25 +26,25 @@ if (students) {
     }
   });
 
-  sort.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const {
-      select: { value: select },
-    } = event.target;
-    let result = await fetch("/admin/sort", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        select,
-      }),
-    });
-    let finalResult = await result.json();
-    const hbs = await fetch("/sortDate.hbs");
-    const template = await hbs.text();
-    const render = Handlebars.compile(template);
-    const element = render({ students: finalResult });
-    document.getElementById("wrapper").innerHTML = element;
-  });
+  // sort.addEventListener("submit", async (event) => {
+  //   event.preventDefault();
+  //   const {
+  //     select: { value: select },
+  //   } = event.target;
+  //   let result = await fetch("/admin/sort", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       select,
+  //     }),
+  //   });
+  //   let finalResult = await result.json();
+  //   const hbs = await fetch("/sortDate.hbs");
+  //   const template = await hbs.text();
+  //   const render = Handlebars.compile(template);
+  //   const element = render({ students: finalResult });
+  //   document.getElementById("wrapper").innerHTML = element;
+  // });
 }

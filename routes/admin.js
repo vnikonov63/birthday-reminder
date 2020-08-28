@@ -53,37 +53,41 @@ router.get("/", checkAuth, async (req, res) => {
   res.render("admin", { students });
 });
 
+router.get("/sort", checkAuth, (req, res) => {
+  res.redirect("/admin");
+});
+
 router.post("/sort", checkAuth, async (req, res) => {
   const students = await Student.find({});
   if (req.body.select === "upcoming") {
     const studentsSorted = [...students];
-    res.json(
-      studentsSorted.sort(function (a, b) {
+    res.render("admin", {
+      students: studentsSorted.sort(function (a, b) {
         return findMilli(a) - findMilli(b);
-      })
-    );
+      }),
+    });
   }
 
   if (req.body.select === "name") {
     const studentsSorted = [...students];
-    res.json(
-      studentsSorted.sort(function (a, b) {
+    res.render("admin", {
+      students: studentsSorted.sort(function (a, b) {
         return sortName(a) - sortName(b);
-      })
-    );
+      }),
+    });
   }
 
   if (req.body.select === "default") {
-    res.json(students);
+    res.render("admin", { students });
   }
 
   if (req.body.select === "firstName") {
     const studentsSorted = [...students];
-    res.json(
-      studentsSorted.sort(function (a, b) {
+    res.render("admin", {
+      students: studentsSorted.sort(function (a, b) {
         return sortFirstName(a) - sortFirstName(b);
-      })
-    );
+      }),
+    });
   }
 });
 
@@ -112,7 +116,7 @@ router.patch("/edit/:id", checkAuth, async (req, res) => {
     prettyDate: birthday,
     groupName: animal,
   });
-  res.redirect('/admin');
+  res.redirect("/admin");
 });
 
 async function auth(login, password) {

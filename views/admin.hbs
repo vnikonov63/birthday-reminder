@@ -4,7 +4,7 @@
 <hr class="mb-4">
 <form method="POST" action="/admin/sort" id="sort" name="sort">
   <label for="select">По</label>
-  <select id="select">
+  <select name="select" id="select">
     <option id="upcoming" value="upcoming">ближайшему дню рождения</option>
     <option id="lastName" value="name">фамилии</option>
     <option id="default" value="default">умолчанию</option>
@@ -29,4 +29,3 @@
   <p>Список студентов пуст 😔</p>
   {{/if}}
 </div>
-
