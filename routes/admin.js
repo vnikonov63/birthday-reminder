@@ -102,17 +102,17 @@ router.get("/edit/:id", checkAuth, async (req, res) => {
 
 router.patch("/edit/:id", checkAuth, async (req, res) => {
   const id = req.params.id;
-  const { firstName, lastName, birthday, city } = req.body;
+  const { firstName, lastName, birthday, city, animal } = req.body;
   const dateOfBirth = new Date(dayjs.utc(birthday).format());
-  let student = await Student.findByIdAndUpdate(id, {
+  await Student.findByIdAndUpdate(id, {
     firstName,
     lastName,
     dateOfBirth,
     typeBootCamp: city,
     prettyDate: birthday,
+    groupName: animal,
   });
-  // res.json({ success: true, student });
-  res.redirect("/admin");
+  res.redirect('/admin');
 });
 
 async function auth(login, password) {

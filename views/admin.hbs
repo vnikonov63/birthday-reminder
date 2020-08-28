@@ -18,7 +18,7 @@
     {{#each students}}
     <li class="list-group-item li d-flex align-items-center justify-content-between" id="_{{this.id}}">
       <span id="{{this.id}}" class="title align-middle mr-auto">{{firstName}} {{lastName}} | {{typeBootCamp}} |
-        <strong>Дата рождения: </strong>{{prettyDate}}
+        <strong>Дата рождения: </strong>{{prettyDate}} | Группа: {{groupName}}
       </span>
       <a href="/admin/edit/{{this.id}}"><button type="button" class="btn btn-primary mr-3">Изменить</button></a>
       <button type="button" class="btn btn-danger">Удалить</button>
@@ -29,3 +29,4 @@
   <p>Список студентов пуст 😔</p>
   {{/if}}
 </div>
+
