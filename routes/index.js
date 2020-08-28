@@ -1,23 +1,22 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 
 // adding the necessary elements to work with the dates
-const dayjs = require('dayjs');
-let utc = require('dayjs/plugin/utc');
+const dayjs = require("dayjs");
+let utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
-const Student = require('../models/students');
+const Student = require("../models/students");
+const Ip = require("../models/ip");
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('index');
+router.get("/", (req, res) => {
+  res.render("index");
 });
 
-
-router.post('/', async (req, res) => {
-
+router.post("/", async (req, res) => {
   const fail = true;
   const invalidYear = true;
   let userIp = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -38,8 +37,7 @@ router.post('/', async (req, res) => {
         groupName: animal,
       }).save();
 
-      res.render('success', { student });
-
+      res.render("success", { student });
     } else {
       res.render("index", { invalidYear, student: req.body });
     }

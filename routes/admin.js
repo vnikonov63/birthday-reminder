@@ -4,7 +4,6 @@ const Student = require("../models/students");
 const router = express.Router();
 const dayjs = require("dayjs");
 const Admin = require("../models/admin");
-const Ip = require("../models/ip");
 
 function checkAuth(req, res, next) {
   if (req.session.user) next();
