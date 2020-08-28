@@ -15,14 +15,17 @@ router.get("/", (req, res) => {
   res.render("index");
 });
 
-
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const fail = true;
   const invalidYear = true;
-  if (typeof req.session.submit === 'undefined') {
+  let userIp = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const ip = await new Ip({
+    ip: userIp,
+  }).save();
+  if (typeof req.session.submit === "undefined") {
     const { name, lastname, birthday, city, animal } = req.body;
     if (isOldEnough(birthday)) {
-      req.session.submit = 'submit';
+      req.session.submit = "submit";
       const birthdayDate = new Date(dayjs.utc(birthday).format());
       let student = await new Student({
         firstName: name,
@@ -32,12 +35,12 @@ router.post('/', async (req, res) => {
         prettyDate: birthday,
         groupName: animal,
       }).save();
-      res.redirect('/success');
+      res.redirect("/success");
     } else {
-      res.render('index', { invalidYear, student: req.body });
+      res.render("index", { invalidYear, student: req.body });
     }
   } else {
-    res.render('index', { fail });
+    res.render("index", { fail });
   }
 });
 
