@@ -1,3 +1,4 @@
+<script defer src="/js/index.js"></script>
 <h1 class="text-align-center mb-2">ELBRUS CODING BOOTCAMP</h1>
 <hr class="mb-3">
 {{#if fail}}
@@ -5,20 +6,71 @@
   Похоже, ты уже вносил данные. Если нет - обратись к преподавателю.
 </div>
 {{/if}}
-<form action="/" method="POST" name="birthdayForm">
+{{#if invalidYear}}
+<div class="alert alert-danger" role="alert">
+  Указанный возраст меньше 18 лет. Проверь ещё раз или обратись к преподавателю.
+</div>
+<form action="/" method="POST" name="birthdayForm" id="bdform">
   <div class="form-group">
-    <label> Твоё имя: <br><input type="text" name="name" id="name" required placeholder="Иван"
-        class="mb-3 form-control"></label><br>
+    <label> Твоё имя: <br><input type="text" name="name" id="name" required placeholder="Иван" class="mb-3 form-control"
+        pattern="[А-Я|Ё]?[а-я|ё]*" value="{{student.name}}"></label><br>
     <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" placeholder="Иванов" required
-        class="mb-3 form-control"></label><br>
-    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" required
-        class="mb-3 form-control"></label><br>
+        class="mb-3 form-control" value="{{student.lastname}}" pattern="[А-Я|Ё]?[а-я|ё]*"></label><br>
+    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" required min="1940-01-01"
+        max="2018-12-31" value="{{student.birthday}}" class="mb-3 form-control"></label><br>
     <label>Где проходишь буткемп: <br>
       <select name="city" class="mb-3 form-control" id="city">
         <option value="moscow">Москва</option>
         <option value="spb">Санкт-Петербург</option>
         <option value="online">Онлайн</option>
       </select></label>
+    <br>
+    <label>Название твоей группы: <br>
+      <select class="mb-3 form-control" name="animal" id="animal">
+        <option value="Волки">Волки</option>
+        <option value="Еноты">Еноты</option>
+        <option value="Лисы">Лисы</option>
+        <option value="Медведи">Медведи</option>
+        <option value="Орлы">Орлы</option>
+        <option value="Совы">Совы</option>
+        <option value="Ежи">Ежи</option>
+        <option value="Бобры">Бобры</option>
+        <option value="Пчёлы">Пчёлы</option>
+      </select>
+    </label>
     <br><button type="submit" class="btn btn-primary">Подтвердить</button>
   </div>
 </form>
+
+{{else}}
+<form action="/" method="POST" name="birthdayForm" id="bdform">
+  <div class="form-group">
+    <label> Твоё имя: <br><input type="text" name="name" id="name" required placeholder="Иван" class="mb-3 form-control"
+        pattern="[А-Я|Ё]?[а-я|ё]*"></label><br>
+    <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" placeholder="Иванов" required
+        class="mb-3 form-control" pattern="[А-Я|Ё]?[а-я|ё]*"></label><br>
+    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" required min="1940-01-01"
+        max="2018-12-31" class="mb-3 form-control"></label><br>
+    <label>Где проходишь буткемп: <br>
+      <select name="city" class="mb-3 form-control" id="city">
+        <option value="moscow">Москва</option>
+        <option value="spb">Санкт-Петербург</option>
+        <option value="online">Онлайн</option>
+      </select></label><br>
+    <label>Название твоей группы: <br>
+      <select class="mb-3 form-control" name="animal" id="animal">
+        <option value="Волки">Волки</option>
+        <option value="Еноты">Еноты</option>
+        <option value="Лисы">Лисы</option>
+        <option value="Медведи">Медведи</option>
+        <option value="Орлы">Орлы</option>
+        <option value="Совы">Совы</option>
+        <option value="Ежи">Ежи</option>
+        <option value="Бобры">Бобры</option>
+        <option value="Пчёлы">Пчёлы</option>
+      </select>
+    </label>
+    <br><button type="submit" class="btn btn-primary">Подтвердить</button>
+  </div>
+</form>
+{{/if}}

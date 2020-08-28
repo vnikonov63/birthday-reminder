@@ -6,6 +6,7 @@ const studentSchema = new Schema({
   dateOfBirth: Date,
   typeBootCamp: String,
   prettyDate: String,
+  groupName: String,
 });
 
 module.exports = model('Student', studentSchema);
