@@ -2,19 +2,31 @@
 
 <h1 class="mb-2">Список студентов</h1>
 <hr class="mb-4">
-{{#if students}}
-<ul id="students" class="list-group mb-5">
-  {{#each students}}
-  <li class="list-group-item li d-flex align-items-center justify-content-between" id="_{{this.id}}">
-    <span id="{{this.id}}" class="title align-middle mr-auto">{{firstName}} {{lastName}} | {{typeBootCamp}} |
-      <strong>Дата рождения: </strong>{{prettyDate}} | Группа: {{groupName}}
-    </span>
-    <a href="/admin/edit/{{this.id}}"><button type="button" class="btn btn-primary mr-3">Изменить</button></a>
-    <button type="button" class="btn btn-danger">Удалить</button>
-  </li>
+<form method="POST" action="/admin/sort" id="sort" name="sort">
+  <label for="select">По</label>
+  <select id="select">
+    <option id="upcoming" value="upcoming">ближайшему дню рождения</option>
+    <option id="lastName" value="name">фамилии</option>
+    <option id="default" value="default">умолчанию</option>
+    <option id="firstName" value="firstName">имени</option>
+  </select>
+  <input type="submit" value="Отсортировать"></form>
+</form>
+<div id="wrapper">
+  {{#if students}}
+  <ul id="students" class="list-group mb-5">
+    {{#each students}}
+    <li class="list-group-item li d-flex align-items-center justify-content-between" id="_{{this.id}}">
+      <span id="{{this.id}}" class="title align-middle mr-auto">{{firstName}} {{lastName}} | {{typeBootCamp}} |
+        <strong>Дата рождения: </strong>{{prettyDate}} | Группа: {{groupName}}
+      </span>
+      <a href="/admin/edit/{{this.id}}"><button type="button" class="btn btn-primary mr-3">Изменить</button></a>
+      <button type="button" class="btn btn-danger">Удалить</button>
+    </li>
+    {{/each}}
+  </ul>
+  {{else}}
+  <p>Список студентов пуст 😔</p>
+  {{/if}}
+</div>
 
-  {{/each}}
-</ul>
-{{else}}
-<p>Список студентов пуст 😔</p>
-{{/if}}
