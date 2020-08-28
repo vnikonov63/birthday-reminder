@@ -1,32 +1,22 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const indexRouter = require("./routes/index");
-const adminRouter = require("./routes/admin");
-const methodOverride = require("method-override");
-const session = require("express-session");
-const bot = require("./bot/index");
-const cookieParser = require("cookie-parser");
-const Admin = require("./models/admin");
-require("dotenv").config();
+
+const indexRouter = require('./routes/index');
+const adminRouter = require('./routes/admin');
+const methodOverride = require('method-override');
+const session = require('express-session');
+const bot = require('./bot/index');
+require('dotenv').config();
+
 
 db = mongoose.connect(process.env.MONGO_DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-db.then(async ({ connection }) => {
-  // await connection.db.dropDatabase();
-  const admin = new Admin({
-    login: "admin",
-    password: "admin",
-  }).save();
-});
-
-app.use(cookieParser());
-
-app.set("view engine", "hbs");
-app.set("views", "views");
+app.set('view engine', 'hbs');
+app.set('views', 'views');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,17 +32,6 @@ app.use(
     },
   })
 );
-
-// app.use((req, res, next) => {
-// <<<<<<< authorization
-//   console.log()
-//   req.session.submit = " " ;
-// =======
-//   console.log("SESSION:", req.session);
-//   // req.session.submit = " ";
-// >>>>>>> master
-//   next();
-// });
 
 app.use(
   methodOverride(function (req, res) {

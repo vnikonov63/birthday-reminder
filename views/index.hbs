@@ -6,23 +6,23 @@
   Похоже, ты уже вносил данные. Если нет - обратись к преподавателю.
 </div>
 {{/if}}
-{{#if invalidYear}}
+{{#if invalidData}}
 <div class="alert alert-danger" role="alert">
-  Указанный возраст меньше 18 лет. Проверь ещё раз или обратись к преподавателю.
+  Данные не прошли проверку на валидность. Попробуй ещё раз.
 </div>
 <form action="/" method="POST" name="birthdayForm" id="bdform">
   <div class="form-group">
-    <label> Твоё имя: <br><input type="text" name="name" id="name" required placeholder="Иван" class="mb-3 form-control"
-        pattern="[А-Я|Ё]?[а-я|ё]*" value="{{student.name}}"></label><br>
-    <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" placeholder="Иванов" required
-        class="mb-3 form-control" value="{{student.lastname}}" pattern="[А-Я|Ё]?[а-я|ё]*"></label><br>
-    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" required min="1940-01-01"
-        max="2018-12-31" value="{{student.birthday}}" class="mb-3 form-control"></label><br>
+    <label> Твоё имя: <br><input type="text" name="name" id="name" placeholder="Иван" class="mb-3 form-control"
+        value="{{student.name}}"></label><br>
+    <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" placeholder="Иванов"
+        class="mb-3 form-control" value="{{student.lastname}}"></label><br>
+    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" value="{{student.birthday}}"
+        class="mb-3 form-control"></label><br>
     <label>Где проходишь буткемп: <br>
       <select name="city" class="mb-3 form-control" id="city">
-        <option value="moscow">Москва</option>
-        <option value="spb">Санкт-Петербург</option>
-        <option value="online">Онлайн</option>
+        <option value="Москва">Москва</option>
+        <option value="Санкт-Петербург">Санкт-Петербург</option>
+        <option value="Онлайн">Онлайн</option>
       </select></label>
     <br>
     <label>Название твоей группы: <br>
@@ -45,11 +45,11 @@
 {{else}}
 <form action="/" method="POST" name="birthdayForm" id="bdform">
   <div class="form-group">
-    <label> Твоё имя: <br><input type="text" name="name" id="name" required placeholder="Иван" class="mb-3 form-control"
-        pattern="[А-Я|Ё]?[а-я|ё]*"></label><br>
-    <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" placeholder="Иванов" required
-        class="mb-3 form-control" pattern="[А-Я|Ё]?[а-я|ё]*"></label><br>
-    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday" required min="1940-01-01"
+    <label> Твоё имя: <br><input type="text" name="name" id="name" placeholder="Иван"
+        class="mb-3 form-control"></label><br>
+    <label>Твоя фамилия: <br><input type="text" name="lastname" id="lastname" placeholder="Иванов"
+        class="mb-3 form-control"></label><br>
+    <label>Твоя дата рождения: <br><input type="date" name="birthday" id="birthday"
         class="mb-3 form-control"></label><br>
     <label>Где проходишь буткемп: <br>
       <select name="city" class="mb-3 form-control" id="city">
