@@ -2,15 +2,29 @@
 
 <h1 class="mb-2">Список студентов</h1>
 <hr class="mb-4">
-<form method="POST" action="/admin/sort" id="sort" name="sort">
-  <label for="select">По</label>
-  <select id="select">
-    <option id="upcoming" value="upcoming">ближайшему дню рождения</option>
-    <option id="lastName" value="name">фамилии</option>
-    <option id="default" value="default">умолчанию</option>
-    <option id="firstName" value="firstName">имени</option>
-  </select>
-  <input type="submit" value="Отсортировать"></form>
+<form method="POST" action="/admin/sort" class="mb-3" id="sort" name="sort">
+
+
+  <div class="input-bar-item" style="width: 30rem;">
+    <form class="form-inline">
+      <div class="input-group">
+        <select class="form-control mb-2" id="select">
+          <option id="upcoming" value="upcoming">По ближайшему дню рождения</option>
+          <option id="lastName" value="name">По фамилии</option>
+          <option id="default" value="default">По умолчанию</option>
+          <option id="firstName" value="firstName">По имени</option>
+        </select>
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-info ml-3" value="Отсортировать">
+        </span>
+      </div>
+    </form>
+  </div>
+
+
+
+</form>
+
 </form>
 <div id="wrapper">
   {{#if students}}
@@ -29,4 +43,3 @@
   <p>Список студентов пуст 😔</p>
   {{/if}}
 </div>
-
