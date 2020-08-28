@@ -6,7 +6,6 @@ const adminRouter = require("./routes/admin");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const bot = require("./bot/index");
-let evercookie = require("evercookie");
 const cookieParser = require("cookie-parser");
 const Admin = require("./models/admin");
 require("dotenv").config();
@@ -25,18 +24,6 @@ db.then(async ({ connection }) => {
 });
 
 app.use(cookieParser());
-app.use(evercookie.backend());
-
-app.use(
-  evercookie.backend({
-    pngCookieName: "evercookie_png",
-    etagCookieName: "evercookie_etag",
-    cacheCookieName: "evercookie_cache",
-    pngPath: "/evercookie_png.php",
-    etagPath: "/evercookie_etag.php",
-    cachePath: "/evercookie_cache.php",
-  })
-);
 
 app.set("view engine", "hbs");
 app.set("views", "views");
