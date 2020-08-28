@@ -36,17 +36,14 @@ router.post("/", async (req, res) => {
         prettyDate: birthday,
         groupName: animal,
       }).save();
-      res.redirect("/success");
+
+      res.render("success", { student });
     } else {
       res.render("index", { invalidYear, student: req.body });
     }
   } else {
     res.render("index", { fail });
   }
-});
-
-router.get("/success", (req, res) => {
-  res.render("success");
 });
 
 function isOldEnough(date) {
