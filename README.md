@@ -1,2 +1,2 @@
 # Birthday Reminder
-Tool for checking if today is somebody's birthday
+Сервис для буткемпа Эльбрус, позволяющий не забыть, когда у кого-то из сотрудников день рождения.
